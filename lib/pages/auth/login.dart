@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:we_lost_find/widgets/button.dart';
-import 'package:we_lost_find/widgets/inputForm.dart';
+import 'package:mau_makan/helpers/dbHelper.dart';
+import 'package:mau_makan/models/user.dart';
+import 'package:mau_makan/providers/userProvider.dart';
+import 'package:mau_makan/services/userService.dart';
+import 'package:mau_makan/widgets/button.dart';
+import 'package:mau_makan/widgets/inputForm.dart';
 
 class LoginPage extends StatefulWidget {
   static const nameRoute = '/loginPage';
@@ -15,6 +19,26 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final UserService _userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+    // Opsional: Cek apakah ada user di DB, jika tidak, tambahkan dummy user
+    _checkAndAddDummyUser();
+  }
+
+  void _checkAndAddDummyUser() async {
+    final users = await _userService.getAllUsers();
+    if (users.isEmpty) {
+      // Tambahkan user dummy jika belum ada
+      await _userService.insertUser(
+        UserModel(username: 'admin', password: 'password'),
+      );
+      print('Dummy user "admin:password" added.');
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -24,9 +48,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = UserProvider();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Color(0xFFF65C04),
+      backgroundColor: Color(0xFF2D4F2B),
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
 
@@ -127,9 +153,15 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(
                       child: LongButton(
                         text: "Masuk",
-                        color: "#F65C04",
+                        color: "#2D4F2B",
                         colorText: "FFFFFF",
-                        onPressed: () {},
+                        onPressed: () {
+                          userProvider.login(
+                            context,
+                            _usernameController,
+                            _passwordController,
+                          );
+                        },
                       ),
                     ),
                   ],
