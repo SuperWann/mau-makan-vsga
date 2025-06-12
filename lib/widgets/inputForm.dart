@@ -93,7 +93,7 @@ class _InputPasswordState extends State<InputPassword> {
       controller: widget.controller,
       obscureText: _isSecure,
       decoration: InputDecoration(
-        hintText: 'Masukkan password',
+        hintText: 'Password',
         hintStyle: TextStyle(
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.w500,

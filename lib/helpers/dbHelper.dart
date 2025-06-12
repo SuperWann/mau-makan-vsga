@@ -26,10 +26,18 @@ class DbHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
-      // onUpgrade: _onUpgrade,
+      onUpgrade: _onUpgrade,
     );
+  }
+
+  Future<void> checkTables() async {
+    final db = await database;
+    List<Map<String, dynamic>> tables = await db.rawQuery(
+      'SELECT name FROM sqlite_master WHERE type="table";',
+    );
+    print(tables);
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -40,17 +48,35 @@ class DbHelper {
         password TEXT
       )
     ''');
+
+    await db.execute('''
+        CREATE TABLE food_places(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nama TEXT NOT NULL,
+          alamat TEXT NOT NULL,
+          latitude TEXT NOT NULL,
+          longitude TEXT NOT NULL,
+          image TEXT,
+          review TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      ''');
   }
 
-  // Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-  //   if (oldVersion < 2) {
-  //     await db.execute('''
-  //     CREATE TABLE profile(
-  //       id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //       userId INTEGER,
-  //       bio TEXT
-  //     )
-  //   ''');
-  //   }
-  // }
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion == 2) {
+      await db.execute('''
+        CREATE TABLE food_places(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nama TEXT NOT NULL,
+          alamat TEXT NOT NULL,
+          latitude TEXT NOT NULL,
+          longitude TEXT NOT NULL,
+          image TEXT,
+          review TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      ''');
+    }
+  }
 }

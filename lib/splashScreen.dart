@@ -40,7 +40,7 @@ class SplashScreenPage extends StatelessWidget {
         ),
       ),
 
-      backgroundColor: Color(0xFFF65C04),
+      backgroundColor: Color(0xFF2D4F2B),
     );
   }
 }

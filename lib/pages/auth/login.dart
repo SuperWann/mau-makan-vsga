@@ -116,24 +116,21 @@ class _LoginPageState extends State<LoginPage> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Masukkan Password",
-                                style: TextStyle(
-                                  color: Colors.black45,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Masukkan Password",
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
                               ),
-                              SizedBox(height: 10),
-                              InputPassword(controller: _passwordController),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: 10),
+                            InputPassword(controller: _passwordController),
+                          ],
                         ),
                       ],
                     ),
