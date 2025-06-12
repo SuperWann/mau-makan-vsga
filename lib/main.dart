@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mau_makan/pages/addFoodPlace.dart';
 import 'package:mau_makan/pages/auth/login.dart';
+import 'package:mau_makan/pages/updateFoodPlace.dart';
 import 'package:mau_makan/pages/detailFoodPlace.dart';
 import 'package:mau_makan/pages/listFoodPlace.dart';
 import 'package:mau_makan/pages/navbar.dart';
@@ -22,10 +23,11 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.nameRoute: (context) => LoginPage(),
         NavbarPage.nameRoute: (context) => NavbarPage(),
-        ListFoodPage.nameRoute: (context) => ListFoodPage(),
+        ListFoodPlacePage.nameRoute: (context) => ListFoodPlacePage(),
         AddListFoodPage.nameRoute: (context) => AddListFoodPage(),
         ProfilePage.nameRoute: (context) => ProfilePage(),
         DetailFoodPlacePage.nameRoute: (context) => DetailFoodPlacePage(),
+        UpdateFoodPlacePage.nameRoute: (context) => UpdateFoodPlacePage(),
       },
     );
   }

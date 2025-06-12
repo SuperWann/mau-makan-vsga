@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreenPage extends StatelessWidget {
   const SplashScreenPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/loginPage');
+    Future.delayed(const Duration(seconds: 2), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool isLoggedIn =
+          prefs.getBool('isLoggedIn') ??
+          false; // Default false jika belum login
+
+      if (isLoggedIn) {
+        Navigator.pushReplacementNamed(
+          context,
+          '/navbarPage',
+        ); // Arahkan ke halaman utama
+      } else {
+        Navigator.pushReplacementNamed(
+          context,
+          '/loginPage',
+        ); // Arahkan ke halaman login
+      }
     });
 
     return Scaffold(

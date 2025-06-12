@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mau_makan/pages/addFoodPlace.dart';
 import 'package:mau_makan/pages/listFoodPlace.dart';
 import 'package:mau_makan/pages/profile.dart';
 
@@ -14,7 +13,7 @@ class NavbarPage extends StatefulWidget {
 class _NavbarPageState extends State<NavbarPage> {
   int _currentIndex = 0;
 
-  final List<dynamic> _pages = [ListFoodPage(), ProfilePage()];
+  final List<dynamic> _pages = [ListFoodPlacePage(), ProfilePage()];
 
   void _onItemTapped(int index) {
     setState(() {

@@ -74,7 +74,7 @@ class UserService {
     final db = await dbHelper.database;
     return await db.update(
       'food_places',
-      foodPlace.toMap(),
+      foodPlace.toMapUpdate(),
       where: 'id = ?',
       whereArgs: [foodPlace.id],
     );

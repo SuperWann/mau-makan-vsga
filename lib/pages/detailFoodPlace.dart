@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mau_makan/models/foodPlace.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:mau_makan/services/userService.dart';
 import 'package:mau_makan/widgets/button.dart';
+import 'package:mau_makan/widgets/dialog.dart';
 
 class DetailFoodPlacePage extends StatefulWidget {
   static const nameRoute = '/detailFoodPlacePage';
@@ -13,14 +15,16 @@ class DetailFoodPlacePage extends StatefulWidget {
 }
 
 class _DetailFoodPlacePageState extends State<DetailFoodPlacePage> {
+  final UserService _userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     final FoodPlaceModel foodPlace =
         ModalRoute.of(context)!.settings.arguments as FoodPlaceModel;
 
     LatLng position = LatLng(
-      double.parse(foodPlace.latitude),
-      double.parse(foodPlace.longitude),
+      double.parse(foodPlace.latitude!),
+      double.parse(foodPlace.longitude!),
     );
 
     return Scaffold(
@@ -38,9 +42,14 @@ class _DetailFoodPlacePageState extends State<DetailFoodPlacePage> {
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 20),
-            icon: const Icon(Icons.share),
+            icon: const Icon(Icons.edit),
             color: Colors.black,
-            onPressed: () {},
+            onPressed:
+                () => Navigator.pushNamed(
+                  context,
+                  '/updateFoodPlacePage',
+                  arguments: foodPlace,
+                ),
           ),
         ],
       ),
@@ -147,10 +156,33 @@ class _DetailFoodPlacePageState extends State<DetailFoodPlacePage> {
                 children: [
                   Expanded(
                     child: LongButton(
-                      text: "Masuk",
+                      text: "Hapus",
                       color: "#E55050",
                       colorText: "FFFFFF",
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder:
+                              (context) => YesNoDialog(
+                                title: "Hapus Tempat Makananmu ?",
+                                content:
+                                    "Apakah kamu yakin ingin menghapus tempat makananmu ?",
+                                onYes:
+                                    () async => _userService
+                                        .deleteFoodPlace(foodPlace.id!)
+                                        .then(
+                                          (value) =>
+                                              Navigator.pushReplacementNamed(
+                                                context,
+                                                '/navbarPage',
+                                              ),
+                                        ),
+                                onNo: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                        );
+                      },
                     ),
                   ),
                 ],

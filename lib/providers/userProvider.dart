@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mau_makan/helpers/dbHelper.dart';
 import 'package:mau_makan/models/user.dart';
 import 'package:mau_makan/services/userService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProvider {
   final UserService _userService = UserService();
@@ -19,6 +19,10 @@ class UserProvider {
     );
 
     if (user != null && user.password == enteredPassword) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true); 
+      await prefs.setString('username', enteredUsername); 
+
       Navigator.pushReplacementNamed(context, '/navbarPage');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

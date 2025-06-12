@@ -4,18 +4,21 @@ class InputFormWithHintText extends StatelessWidget {
   final String text;
   final TextInputType type;
   final TextEditingController controller;
+  Function(String)? onchange;
 
-  const InputFormWithHintText({
+  InputFormWithHintText({
     super.key,
     required this.type,
     required this.text,
     required this.controller,
+    this.onchange,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      onChanged: onchange,
       enableSuggestions: true,
       keyboardType: type,
       decoration: InputDecoration(

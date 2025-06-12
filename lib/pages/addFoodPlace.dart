@@ -191,7 +191,7 @@ class _AddListFoodPageState extends State<AddListFoodPage> {
         const SnackBar(content: Text('Tempat makan berhasil disimpan!')),
       );
 
-      Navigator.of(context).pop();
+      Navigator.pushReplacementNamed(context, '/navbarPage');
     } catch (e) {
       ScaffoldMessenger.of(
         context,
