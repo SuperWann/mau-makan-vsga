@@ -40,11 +40,13 @@ class UserService {
   // Food Places CRUD operations
   Future<int> insertFoodPlace(FoodPlaceModel foodPlace) async {
     final db = await dbHelper.database;
-    return await db.insert(
+    final result = await db.insert(
       'food_places',
       foodPlace.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    print('Insert result: $result'); // Cek hasil insert
+    return result;
   }
 
   Future<List<FoodPlaceModel>> getAllFoodPlaces() async {

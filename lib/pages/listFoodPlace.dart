@@ -37,8 +37,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
         foodPlaces = places;
         isLoading = false;
       });
-
-      print(places.length);
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -57,31 +55,13 @@ class _ListFoodPageState extends State<ListFoodPage> {
   Widget _buildImageWidget(String? imagePath) {
     // Selalu gunakan placeholder untuk sementara
     return Container(
-      height: 200,
+      height: MediaQuery.of(context).size.height * 0.15,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.orange[300]!, Colors.orange[500]!],
-        ),
+        color: Colors.grey,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
       child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.restaurant, size: 50, color: Colors.white),
-            SizedBox(height: 8),
-            Text(
-              'Food Image',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
+        child: Icon(Icons.restaurant, size: 50, color: Colors.white),
       ),
     );
   }
@@ -91,58 +71,67 @@ class _ListFoodPageState extends State<ListFoodPage> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Gambar
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: _buildImageWidget(foodPlace.image),
-          ),
-
-          // Konten
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Nama Tempat
-                Text(
-                  foodPlace.nama,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black87,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-
-                // Alamat
-                Row(
-                  children: [
-                    const Icon(Icons.location_on, size: 16, color: Colors.red),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        foodPlace.alamat,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontFamily: 'Montserrat',
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+      child: GestureDetector(
+        onTap:
+            () => Navigator.pushNamed(
+              context,
+              '/detailFoodPlacePage',
+              arguments: foodPlace,
+            ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Gambar
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
+              child: _buildImageWidget(foodPlace.image),
+            ),
+            // Konten
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Nama Tempat
+                  Text(
+                    foodPlace.nama,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.black87,
                     ),
-                  ],
-                ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
 
-                // Review (jika ada)
-                if (foodPlace.review.isNotEmpty) ...[
-                  const SizedBox(height: 12),
+                  // Alamat
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 16,
+                        color: Colors.red,
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          foodPlace.alamat,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                            fontFamily: 'Montserrat',
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
@@ -171,7 +160,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 4),
                         Text(
                           foodPlace.review,
                           style: const TextStyle(
@@ -186,23 +174,10 @@ class _ListFoodPageState extends State<ListFoodPage> {
                     ),
                   ),
                 ],
-
-                // Koordinat (optional, bisa dihidden)
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.gps_fixed, size: 12, color: Colors.green),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${double.parse(foodPlace.latitude).toStringAsFixed(4)}, ${double.parse(foodPlace.longitude).toStringAsFixed(4)}',
-                      style: const TextStyle(fontSize: 10, color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -252,13 +227,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
             color: Colors.black87,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: _refreshData,
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
-          ),
-        ],
       ),
       body:
           isLoading

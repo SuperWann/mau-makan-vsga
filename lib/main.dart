@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mau_makan/pages/addListFood.dart';
+import 'package:mau_makan/pages/addFoodPlace.dart';
 import 'package:mau_makan/pages/auth/login.dart';
-import 'package:mau_makan/pages/listFood.dart';
+import 'package:mau_makan/pages/detailFoodPlace.dart';
+import 'package:mau_makan/pages/listFoodPlace.dart';
 import 'package:mau_makan/pages/navbar.dart';
 import 'package:mau_makan/pages/profile.dart';
 import 'package:mau_makan/splashScreen.dart';
@@ -15,7 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreenPage(),
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
         ListFoodPage.nameRoute: (context) => ListFoodPage(),
         AddListFoodPage.nameRoute: (context) => AddListFoodPage(),
         ProfilePage.nameRoute: (context) => ProfilePage(),
+        DetailFoodPlacePage.nameRoute: (context) => DetailFoodPlacePage(),
       },
     );
   }

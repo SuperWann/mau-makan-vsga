@@ -367,7 +367,6 @@ class _AddListFoodPageState extends State<AddListFoodPage> {
                               _reviewController.text.isNotEmpty &&
                               selectedImage != null) {
                             _saveFoodPlace(context);
-                            Navigator.pop(context);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

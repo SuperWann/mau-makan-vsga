@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mau_makan/pages/addListFood.dart';
-import 'package:mau_makan/pages/listFood.dart';
+import 'package:mau_makan/pages/addFoodPlace.dart';
+import 'package:mau_makan/pages/listFoodPlace.dart';
 import 'package:mau_makan/pages/profile.dart';
 
 class NavbarPage extends StatefulWidget {
