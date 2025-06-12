@@ -3,16 +3,16 @@ import 'package:mau_makan/helpers/dbHelper.dart';
 import 'package:mau_makan/models/foodPlace.dart';
 import 'package:mau_makan/services/userService.dart';
 
-class ListFoodPage extends StatefulWidget {
-  static const String nameRoute = '/listFoodPage';
+class ListFoodPlacePage extends StatefulWidget {
+  static const String nameRoute = '/listFoodPlacePage';
 
-  const ListFoodPage({super.key});
+  const ListFoodPlacePage({super.key});
 
   @override
-  State<ListFoodPage> createState() => _ListFoodPageState();
+  State<ListFoodPlacePage> createState() => _ListFoodPlacePageState();
 }
 
-class _ListFoodPageState extends State<ListFoodPage> {
+class _ListFoodPlacePageState extends State<ListFoodPlacePage> {
   final UserService _userService = UserService();
   final DbHelper _dbHelper = DbHelper();
   List<FoodPlaceModel> foodPlaces = [];
@@ -69,8 +69,8 @@ class _ListFoodPageState extends State<ListFoodPage> {
   Widget _buildFoodPlaceCard(FoodPlaceModel foodPlace) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 0,
       child: GestureDetector(
         onTap:
             () => Navigator.pushNamed(
@@ -98,7 +98,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                   Text(
                     foodPlace.nama,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Montserrat',
                       color: Colors.black87,
@@ -122,7 +122,7 @@ class _ListFoodPageState extends State<ListFoodPage> {
                           foodPlace.alamat,
                           style: const TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontFamily: 'Montserrat',
                           ),
                           maxLines: 2,
@@ -130,48 +130,6 @@ class _ListFoodPageState extends State<ListFoodPage> {
                         ),
                       ),
                     ],
-                  ),
-
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
-                          children: [
-                            Icon(
-                              Icons.rate_review,
-                              size: 16,
-                              color: Colors.orange,
-                            ),
-                            SizedBox(width: 4),
-                            Text(
-                              'Review:',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          foodPlace.review,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                            fontFamily: 'Montserrat',
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),
@@ -215,12 +173,11 @@ class _ListFoodPageState extends State<ListFoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 1,
         title: const Text(
-          'List Food Places',
+          'Tempat Makanku',
           style: TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w600,
